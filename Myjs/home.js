@@ -93,14 +93,14 @@ function add_info(UserData,Account,Account_name){
 
 function getSnap(UserData){
     ref = firebase.database.ref(UserData.uid+'/Account')
-    ref.on('value',function(snap){
-        return sn
-    })
+    // ref.on('value',function(snap){
+    //     return snap
+    // })
     return ref
 }
 
 function showitall(UserData){
-    //ref = getSnap(UserData)
+    ref = firebase.database().ref(UserData.uid+'/Account/')///= getSnap(UserData)
     ref.on('value',function(snap){
         snap.forEach(function(childsnap){
             console.log(childsnap.key)
@@ -136,6 +136,7 @@ function view_info(Accountname){
     var view_button = document.createElement("button")
     view_button.className="position_it2 ui button"
     view_button.innerHTML = "View"
+    view_button.id = 'view_window'
    // view_button.id = Accountname
     //view_button.onclick = view_info
 

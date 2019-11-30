@@ -1,11 +1,15 @@
 plus = document.getElementById('add_psswrd')
 cancel = document.getElementById('cancel_edit')
+viewoptions = document.getElementById('view_window') //button to view accoutn options
 
 cancel.addEventListener('click',()=>{
     $('.ui.modal')
     .modal('hide');
 })
-
+viewoptions.addEventListener('click',()=>{
+    console.log('viewoptions')
+    add_psswrd(1)
+})
 plus.addEventListener('click',()=>{
     add_psswrd(0)
 })

@@ -67,9 +67,9 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
         
     })
 
-    view_button.addEventListener('click',()=>{
+    //view_button.addEventListener('click',()=>{
         //add_psswrd(1)
-    })
+    //})
 
 
 
@@ -103,10 +103,12 @@ function showitall(UserData){
     ref = firebase.database().ref(UserData.uid+'/Account/')///= getSnap(UserData)
     ref.on('value',function(snap){
         snap.forEach(function(childsnap){
-            console.log(childsnap.key)
+            console.log("child snap key")
+            console.log(childsnap.val())
             name = childsnap.key
             //call show it function
-            view_info(name)
+            view_info(name,childsnap.val())
+            fill_info(childsnap)
         })
     })
 }
@@ -114,8 +116,11 @@ function showitall(UserData){
     var divArr1 = [];
 var divArr2 = [];
 
+function fill_info(Accountinfo){
 
-function view_info(Accountname){
+
+}
+function view_info(Accountname, accountinfo){
 
     var parentnode = document.getElementById("parent_list")
     console.log(parentnode)
@@ -123,7 +128,7 @@ function view_info(Accountname){
     
     var newdivv = document.createElement("DIV");
     newdivv.className = "item"
-    newdivv.id = Accountname
+    newdivv.id = Accountname + "_div"
     console.log(newdivv)
 
     var newdivv2 = document.createElement("DIV");
@@ -136,7 +141,15 @@ function view_info(Accountname){
     var view_button = document.createElement("button")
     view_button.className="position_it2 ui button"
     view_button.innerHTML = "View"
-    view_button.id = 'view_window'
+    view_button.tagName = 'view_window2'
+    view_button.name = "namer"
+    view_button.id = Accountname
+    // view_button.onclick = function(){
+        
+    //     add_psswrd(1)
+    //     fill_info(Accountname)
+        
+    // }
    // view_button.id = Accountname
     //view_button.onclick = view_info
 
@@ -150,11 +163,15 @@ function view_info(Accountname){
     newdivv2.appendChild(newdivv3)
     newdivv.appendChild(newdivv2)
 
-    if(divs[Accountname] != Accountname){
-        divs[Accountname] = Accountname
+    //if(divs[Accountname] != Accountname){
+    if(!divs.hasOwnProperty(Accountname)){
+        console.log(Accountname)
+        divs[Accountname] = accountinfo
 
     
         parentnode.appendChild(newdivv)
+        console.log(divs)
+        console.log(divs)
     }
 
 

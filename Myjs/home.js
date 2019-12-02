@@ -32,13 +32,37 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
 
     showitall(DaUserInfo)
 
-
+    delete_button = document.getElementById('delete')
     add_button = document.getElementById('add_account')
     view_button = document.getElementById('view_window')
     emailID = document.getElementById('eml')
     passwordID = document.getElementById('pwd')
     userID = document.getElementById('usr')
     typID = document.getElementById('typ')
+
+
+    delete_button.addEventListener('click', ()=>{
+
+        var email = emailID.value;
+        var password = passwordID.value; 
+        var username = userID.value;
+        var typ = typID.value; 
+
+        console.log(email)
+        info_to_add = {
+            Account_type: typ,
+            email: email,
+            password: password,
+            usrname: ""
+
+        }
+        if(username != ""){
+            info_to_add.usrname = username
+            console.log("type object")
+            console.log(info_to_add.usrname)
+        }
+        update_info(DaUserInfo,info_to_add,typ)
+    })
 
     add_button.addEventListener("click", function(){
         var email = emailID.value;
@@ -81,14 +105,31 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
     }
 })
 
+
+
+
 function add_info(UserData,Account,Account_name){
     console.log(Account)
     console.log(Account['Account_type'])
+    console.log("add_info")
     if((Account['Account_type']!="") && (Account['email']!="")&& (Account['password'] != "")){
         firebase.database().ref(UserData.uid+'/Account/'+Account_name).set(Account)
     }
     $('.ui.modal')
     .modal('hide');
+}
+
+function update_info(UserData,Account,actname){
+
+    //var firebase.database().ref()
+    console.log(UserData)
+    console.log(Account)
+    console.log(actname)
+    firebase.database().ref(UserData.uid+'/Account/'+actname).update(Account)
+    divs[actname]=Account
+    var updates = {}
+
+    
 }
 
 function getSnap(UserData){

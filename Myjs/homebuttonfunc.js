@@ -5,10 +5,10 @@ an = document.getElementById('Account_name')
 console.log(an)
 
 
-cancel.addEventListener('click',()=>{
-    $('.ui.modal')
-    .modal('hide');
-})
+// cancel.addEventListener('click',()=>{
+//     $('.ui.modal')
+//     .modal('hide');
+// })
 // viewoptions.addEventListener('click',()=>{
 //     console.log('viewoptions')
 //     add_psswrd(1)

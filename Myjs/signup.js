@@ -1,6 +1,7 @@
 //const { remote } = require('electron')
 var firebase = require("firebase/app");
 var init = require('./Myjs/MyFire')
+var Crypto = require('./Myjs/keygen')
 //const {BrowserWindow} = require('electron').remote
 init.myFireInit()
 
@@ -21,7 +22,7 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
   }
 })
 
-function setup_new_user(user){
+function setup_new_user(user,storedsalt){
     console.log("we tried but nothing seems to be happeneing")
     //console.log(typeof userID)
     //console.log(userID)
@@ -32,6 +33,8 @@ function setup_new_user(user){
     console.log(user.email)
     //console.log(FN)
     console.log("no fn")
+    
+
     var postData = {
   
       uid : ID,
@@ -44,7 +47,8 @@ function setup_new_user(user){
     .set(
       {
         userid: ID,
-        email: em}
+        email: em,
+        salt: storedsalt}
     )
     .then(function(){
       console.log("WELP ITS WORKING")
@@ -92,7 +96,9 @@ signi.addEventListener('click', function(){
         if(DaUserInfo){
           console.log(DaUserInfo.email)
         // console.log(Firstname)
-          setup_new_user(DaUserInfo)
+          key = Crypto.Create_key(password)
+          setup_new_user(DaUserInfo,key['Salt'])
+
           //window.location.replace('home.html')
         }else{
           console.log("WE NOT IN")

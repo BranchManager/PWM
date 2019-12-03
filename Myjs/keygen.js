@@ -1,4 +1,9 @@
-//var textEncoding = require('text-encoding')
+var crypto = require('crypto')
+
+const KEYSIZE = 32
+const ALG = 'aes-256-cbc';
+
+
 Account={
     title:"Netflix",
     user:"delrita@hotmail.com",
@@ -11,23 +16,17 @@ password = "123456"
 text = JSON.stringify(Account)
 console.log(typeof texr)
 
-var crypto = require('crypto')
-
-const KEYSIZE = 32
-const ALG = 'aes-256-cbc';
 
 //var salt = crypto.randomBytes(16)
-Key = Create_key(password)
-cipher = encrypt(Key['Master_key'],text)
-Plaintext = decrypt(Key['Master_key'],cipher)
 
-console.log(cipher['encryptedData'])
-console.log(Plaintext)
-function Create_key(user_password, salt=undefined){
+Create_key = function(user_password, salt=undefined){
 
     if(salt === undefined){
         var salt = crypto.randomBytes(16)
         //console.log('testvar salt = crypto.randomBytes(16)')
+    }else{
+        console.log("it wasnt created")
+        var salt = Buffer.from(salt, 'hex')
     }
         
     let key = crypto.scryptSync(user_password,salt,KEYSIZE)
@@ -51,7 +50,7 @@ function Create_key(user_password, salt=undefined){
    return keys_ingeridients
 }
 
-function encrypt(key,Plaintext){
+encrypt = function(key,Plaintext){
 
     console.log(key)
     console.log(Plaintext)
@@ -63,7 +62,7 @@ function encrypt(key,Plaintext){
     return { iv: iv.toString('hex'), encryptedData: encrypted.toString('hex') };
     
 }
-function decrypt(key, cipher_text){
+decrypt = function(key, cipher_text){
     let iv = Buffer.from(cipher_text.iv, 'hex');
     let encryptedText = Buffer.from(cipher_text.encryptedData, 'hex');
     let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key, 'hex'), iv);
@@ -73,50 +72,15 @@ function decrypt(key, cipher_text){
 
 }
 
+module.exports = {Create_key,encrypt,decrypt}
+
+Key = Create_key(password)
+
+console.log(Key)
+ cipher = encrypt(Key['Master_key'],text)
+ Plaintext = decrypt(Key['Master_key'],cipher)
+
+ console.log(cipher['encryptedData'])
+ console.log(Plaintext)
 
     
-
-    // console.log(key)
-    // console.log(new Uint8Array(key))
-    // str = key.toString('utf8')
-    // console.log(str)
-    // console.log('this the key')
-    // console.log(Buffer.from(str,'utf8'))
-
-    // salt_buffer = Buffer.from(salt)
-    // Key_buffer = Buffer.from(key)
-
-    // salty_key = Buffer.concat([Key_buffer,salt_buffer])
-
-    
-
-
-
-
-
-
-
-
-// const key = crypto.scryptSync(password, 'salt', 32);
-// console.log(key)
-
-// const iv = Buffer.alloc(16, 0); // Initialization vector.
-
-// const cipher = crypto.createCipheriv(algorithm, key, iv);
-// console.log(cipher)
-
-
-
-
-// var scrypt = require("scrypt-js")
-
-// pssd = Buffer.from("mystring".normalize('NFKC'),'utf8')
-// salt = Buffer.from("mysalt".normalize('NFKC'),'utf8')
-
-// const N = 1024, r = 8, p = 1;
-// const dkLen = 32;
-
-// const key = scrypt.syncScrypt(pssd, salt, N, r, p, dkLen);
-// console.log(key)
-// console.log(key.length)
-

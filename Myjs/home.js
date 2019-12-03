@@ -1,5 +1,6 @@
 //const firebase = require("firebase/app");
 //const init = require('./Myjs/MyFire')
+const Crypto = require('./keygen')
 let divs = {bill:"hello"}
 let cache = ""
 var userID;

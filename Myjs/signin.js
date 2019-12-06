@@ -12,7 +12,7 @@ init.myFireInit()
 
 
 login = document.getElementById("login")
-function changescreen(){
+
   firebase.auth().onAuthStateChanged(DaUserInfo =>{
       if(DaUserInfo){
         console.log('the following user is signed in')
@@ -25,10 +25,18 @@ function changescreen(){
             //global.salt = snap.val().salt
             obj['salt'] = snap.val().salt
             console.log(snap.val())
+            // console.log(obj)
+            // console.log(JSON.stringify(obj))
+            // Crypto.Write_file(JSON.stringify(obj))
+
+            obj['pswrd']= global.passwordVal
+        //changescreen()
             console.log(obj)
             console.log(JSON.stringify(obj))
             Crypto.Write_file(JSON.stringify(obj))
+            
             window.location.replace('home.html')
+            
             //showitall(DaUserInfo)
         },
         
@@ -37,11 +45,12 @@ function changescreen(){
         })
       // console.log(Firstname)
         //
+        
       }else{
         console.log("no one signed in")
       }
   })
-}
+
 
 const emailElm = document.getElementById('email')
 const passwordElm = document.getElementById('password')
@@ -51,7 +60,7 @@ login.addEventListener('mouseup',function(event){
     console.log("alright")
     const emailVal = emailElm.value
     console.log(`email: ${emailVal}`)
-    const passwordVal = passwordElm.value
+    global.passwordVal = passwordElm.value
 
     console.log(`password: ${passwordVal}`)
 
@@ -71,10 +80,37 @@ login.addEventListener('mouseup',function(event){
         console.log(test)
         console.log("good")
         console.log(passwordVal)
-        obj['pswrd']= passwordVal
-        changescreen()
+        // obj['pswrd']= global.passwordVal
+        // changescreen()
+        // console.log(obj)
+        // console.log(JSON.stringify(obj))
+        // Crypto.Write_file(JSON.stringify(obj))
+            
+        // window.location.replace('home.html')
         
         //module.exports = salt
     })
     console.log('testing it')
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

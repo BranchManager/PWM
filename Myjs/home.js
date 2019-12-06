@@ -125,6 +125,7 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
             console.log(add_button)
             console.log(emailID)
             console.log(email)
+            console.log(typ)
             info_to_add = {
                 Account_type: typ,
                 email: email,
@@ -219,6 +220,7 @@ function add_info(UserData,Account,Account_name,MP){
 
 
     console.log("add_info")
+    console.log(Account_name)
     if((Account['Account_type']!="") && (Account['email']!="")&& (Account['password'] != "")){
         firebase.database().ref(UserData.uid+'/Account/'+Account_name).set(encrypted).then(()=>{
             console.log('try hiding')
@@ -226,10 +228,10 @@ function add_info(UserData,Account,Account_name,MP){
                 onHidden: function(){
                 console.log('hidden');
 
-                 emailID = document.getElementById('Email').value = ""
-                 passwordID = document.getElementById('pwd').value=""
-                 userID = document.getElementById('usr').value=""
-                 typID = document.getElementById('typ').value=""
+                /// emailID = document.getElementById('Email').value = ""
+                 ///passwordID = document.getElementById('pwd').value=""
+                 ///userID = document.getElementById('usr').value=""
+                 ///typID = document.getElementById('typ').value=""
             }
     
             }).modal('hide')

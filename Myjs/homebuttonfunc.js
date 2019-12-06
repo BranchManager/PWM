@@ -43,10 +43,10 @@ function add_psswrd(show){
     $('.ui.modal').modal({
         onHidden: function(){
             console.log('hidden');
-            emailID = document.getElementById('Email').value = ""
-            passwordID = document.getElementById('pwd').value=""
-            userID = document.getElementById('usr').value=""
-            typID = document.getElementById('typ').value=""
+            // emailID = document.getElementById('Email').value = ""
+            // passwordID = document.getElementById('pwd').value=""
+            // userID = document.getElementById('usr').value=""
+            // typID = document.getElementById('typ').value=""
 
         },
         onShow: function(){

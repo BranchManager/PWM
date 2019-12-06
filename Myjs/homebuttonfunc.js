@@ -35,21 +35,42 @@ console.log(an)
 // })
 
 plus.addEventListener('click',()=>{
+   
     add_psswrd(0)
 })
 function add_psswrd(show){
 
-    $('.ui.modal')
-    .modal('show');
+    $('.ui.modal').modal({
+        onHidden: function(){
+            console.log('hidden');
+            emailID = document.getElementById('Email').value = ""
+            passwordID = document.getElementById('pwd').value=""
+            userID = document.getElementById('usr').value=""
+            typID = document.getElementById('typ').value=""
+
+        },
+        onShow: function(){
+            console.log('shown');
+        },
+        onApprove: function() {
+            console.log('Approve');
+           // return validateModal()
+        }
+    }).modal('show');
+    
+    
+   // .modal('show');
+
+    
 
     if(show === 1){
         myFunction(1)
     }else{
         myFunction(0)
-        emailID = document.getElementById('eml').value = ""
-        passwordID = document.getElementById('pwd').value=""
-        userID = document.getElementById('usr').value=""
-        typID = document.getElementById('typ').value=""
+        //emailID = document.getElementById('Email').value = ""
+        //passwordID = document.getElementById('pwd').value=""
+        //userID = document.getElementById('usr').value=""
+        //typID = document.getElementById('typ').value=""
     }
     
   }
@@ -91,7 +112,7 @@ function myFunction(show) {
           cache = e.target.id
           
           document.getElementById('usr').value = divs[e.target.id]['usrname']
-          document.getElementById('eml').value = divs[e.target.id]['email']
+          document.getElementById('Email').value = divs[e.target.id]['email']
           document.getElementById('pwd').value = divs[e.target.id]['password']
           document.getElementById('typ').value = divs[e.target.id]['Account_type']
           add_psswrd(1)

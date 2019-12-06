@@ -1,7 +1,7 @@
 //const { remote } = require('electron')
 var firebase = require("firebase/app");
 var init = require('./Myjs/MyFire')
-var Crypto = require('./Myjs/keygen')
+var Crypto = require('./Myjs/keygen.js')
 //const {BrowserWindow} = require('electron').remote
 init.myFireInit()
 
@@ -96,6 +96,7 @@ signi.addEventListener('click', function(){
         if(DaUserInfo){
           console.log(DaUserInfo.email)
         // console.log(Firstname)
+          Crypto.Write_file(password)
           key = Crypto.Create_key(password)
           setup_new_user(DaUserInfo,key['Salt'])
 

@@ -1,5 +1,7 @@
 const { app, BrowserWindow } = require('electron')
-
+var firebase = require("firebase/app");
+var init = require('./Myjs/MyFire')
+init.myFireInit()
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -38,6 +40,23 @@ app.on('ready', createWindow)
 app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+    firebase.auth().onAuthStateChanged(DaUserInfo =>{
+        if(DaUserInfo){
+        console.log(DaUserInfo.email)
+        // console.log(Firstname)
+        //setup_new_user(DaUserInfo)
+        
+        }else{
+            console.log("WE NOT IN")
+            //window.location.replace('Login.html')
+        }
+    })
+  }).catch(function(error) {
+    // An error happened.
+    console.log("ERROR: did not signout user")
+  });
   if (process.platform !== 'darwin') {
     app.quit()
   }

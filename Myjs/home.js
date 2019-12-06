@@ -1,25 +1,42 @@
 //const firebase = require("firebase/app");
 //const init = require('./Myjs/MyFire')
-const Crypto = require('./keygen')
+const Crypto = require('./Myjs/keygen')
+//let salty = require('./Myjs/signin')
+//salt = salty.salt
+ //console.log(salt)
+
+// import {Crypto} from './keygen.'
+//console.log(Crypto)
 let divs = {bill:"hello"}
+global.Master_psswrd = "f"
 let cache = ""
+global.salt = "p"
 var userID;
 //init.myFireInit()
-// save_button = document.getElementById('save')
-// delete_button = document.getElementById('delete')
-// add_button = document.getElementById('add_account')
-// view_button = document.getElementById('view_window')
-// emailID = document.getElementById('eml')
-// passwordID = document.getElementById('pwd')
-// userID = document.getElementById('usr')
-// typID = document.getElementById('typ')
-
+save_button = document.getElementById('save')
+delete_button = document.getElementById('delete')
+add_button = document.getElementById('add_account')
+view_button = document.getElementById('view_window')
+emailID = document.getElementById('Email')
+passwordID = document.getElementById('pwd')
+userID = document.getElementById('usr')
+typID = document.getElementById('typ')
+//let salt="l";
+//module.exports.salt = "salt" 
+//console.log(Crypto.pass())
 firebase.auth().onAuthStateChanged(DaUserInfo =>{
     if(DaUserInfo){
       console.log('the following user is signed in')
+      MPs = Crypto.Read_file()
+      console.log(MPs)
+      MP = JSON.parse(MPs)
+      I_am_master = MP['pswrd']
+      global.salt = MP['salt']
+      console.log(global.salt)
       console.log(DaUserInfo.uid)
       userID = DaUserInfo.uid
       console.log(" here they are again")
+      console.log(I_am_master)
       //console.log(userID)
       //console.log(userID)
      // console.log(Firstname)
@@ -31,7 +48,9 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
       
       ref.once('value', function(snap){
           console.log(snap.val().email)
+          global.salt = snap.val().salt
           console.log(snap.val())
+          //showitall(DaUserInfo)
       },
       
       function(error){
@@ -39,27 +58,43 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
       })
 
       
+      
+        //if(global.salt != "p"){
+            showitall(DaUserInfo,I_am_master)
+       // }
 
-
-        showitall(DaUserInfo)
-
-        save_button = document.getElementById('save')
-        delete_button = document.getElementById('delete')
-        add_button = document.getElementById('add_account')
-        view_button = document.getElementById('view_window')
-        emailID = document.getElementById('eml')
-        passwordID = document.getElementById('pwd')
-        userID = document.getElementById('usr')
-        typID = document.getElementById('typ')
+        // save_button = document.getElementById('save')
+        // delete_button = document.getElementById('delete')
+        // add_button = document.getElementById('add_account')
+        // view_button = document.getElementById('view_window')
+        // emailID = document.getElementById('Email')
+        // passwordID = document.getElementById('pwd')
+        // userID = document.getElementById('usr')
+        // typID = document.getElementById('typ')
 
 
         save_button.addEventListener('click', ()=>{
+
+            // var email = emailID.value;
+            // var password = passwordID.value; 
+            // var username = userID.value;
+            // var typ = typID.value; 
+
+            emailID = document.getElementById('Email')
+            passwordID = document.getElementById('pwd')
+            userID = document.getElementById('usr')
+            typID = document.getElementById('typ')
 
             var email = emailID.value;
             var password = passwordID.value; 
             var username = userID.value;
             var typ = typID.value; 
 
+            // emailID.value = ""
+            // passwordID.value = ""
+            // userID.value = ""
+            // typID.value = ""
+            
             console.log(email)
             info_to_add = {
                 Account_type: typ,
@@ -82,6 +117,13 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
             var username = userID.value;
             var typ = typID.value; 
 
+            // emailID.value = ""
+            // passwordID.value = ""
+            // userID.value = ""
+            // typID.value = ""
+
+            console.log(add_button)
+            console.log(emailID)
             console.log(email)
             info_to_add = {
                 Account_type: typ,
@@ -96,8 +138,9 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
                 console.log(info_to_add.usrname)
             }
 
+            console.log(info_to_add)
+            add_info(DaUserInfo,info_to_add,typ,I_am_master)
             
-            add_info(DaUserInfo,info_to_add,typ)
             
 
             
@@ -105,6 +148,11 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
 
         delete_button.addEventListener('click',function(){
             console.log(cache)
+            // emailID.value = ""
+            // passwordID.value = ""
+            // userID.value = ""
+            // typID.value = ""
+
             delete_info(DaUserInfo,cache)
             //delete_info(DaUserInfo,typ)
         })
@@ -130,6 +178,17 @@ function delete_info(UserData,Account_name){
    
     firebase.database().ref(UserData.uid+'/Account/'+Account_name).remove().then(function() {
         console.log("Remove succeeded.")
+        $('.ui.modal').modal({
+            onHide: function(){
+            console.log('hidden');
+            // emailID = document.getElementById('Email').value = ""
+            // passwordID = document.getElementById('pwd').value=""
+            // userID = document.getElementById('usr').value=""
+            // typID = document.getElementById('typ').value=""
+        }
+
+        }).modal('hide')
+
       })
       .catch(function(error) {
         console.log("Remove failed: " + error.message)
@@ -139,15 +198,44 @@ function delete_info(UserData,Account_name){
     
 }
 
-function add_info(UserData,Account,Account_name){
+function add_info(UserData,Account,Account_name,MP){
+    let encrypted = ""
     console.log(Account)
     console.log(Account['Account_type'])
+    console.log(global.salt)
+
+    Actual_key = Crypto.Create_key(MP,global.salt)
+    console.log(Actual_key)
+    str = JSON.stringify(Account)
+    console.log(Actual_key['Master_key'])
+    encrypted = Crypto.encrypt(Actual_key['Master_key'],str)
+    console.log(encrypted)
+
+
+    console.log(Actual_key)
+    accinfo = Crypto.decrypt(Actual_key['Master_key'],encrypted)
+    console.log(accinfo)
+    //divs[Accountname] = accountinfo
+
+
     console.log("add_info")
     if((Account['Account_type']!="") && (Account['email']!="")&& (Account['password'] != "")){
-        firebase.database().ref(UserData.uid+'/Account/'+Account_name).set(Account)
+        firebase.database().ref(UserData.uid+'/Account/'+Account_name).set(encrypted).then(()=>{
+            console.log('try hiding')
+            $('.ui.modal').modal({
+                onHidden: function(){
+                console.log('hidden');
+
+                 emailID = document.getElementById('Email').value = ""
+                 passwordID = document.getElementById('pwd').value=""
+                 userID = document.getElementById('usr').value=""
+                 typID = document.getElementById('typ').value=""
+            }
+    
+            }).modal('hide')
+        })
     }
-    $('.ui.modal')
-    .modal('hide');
+    
 }
 
 function update_info(UserData,Account,actname){
@@ -174,15 +262,27 @@ function getSnap(UserData){
     return ref
 }
 
-function showitall(UserData){
-    ref = firebase.database().ref(UserData.uid+'/Account/')///= getSnap(UserData)
-    ref.on('value',function(snap){
+function showitall(UserData,MP){
+    ref = firebase.database().ref(UserData.uid)///= getSnap(UserData)
+    // ref.once('value',function(saltval){
+    //     global.salt = saltval.val().salt
+    //     console.log(global.salt)
+    // })
+    ref.child('/Account/').on('value',function(snap){
         snap.forEach(function(childsnap){
             console.log("child snap key")
             console.log(childsnap.val())
+            Plaintext = childsnap.val()
             name = childsnap.key
+            //name['salt'] = 
+            console.log(childsnap.val())
             //call show it function
-            view_info(name,childsnap.val())
+            console.log(global.salt)
+            
+            view_info(name,childsnap.val(),MP)
+
+            
+
             fill_info(childsnap)
         })
     })
@@ -195,7 +295,7 @@ function fill_info(Accountinfo){
 
 
 }
-function view_info(Accountname, accountinfo){
+function view_info(Accountname, accountinfo,MP){
 
     var parentnode = document.getElementById("parent_list")
     console.log(parentnode)
@@ -241,7 +341,17 @@ function view_info(Accountname, accountinfo){
     //if(divs[Accountname] != Accountname){
     if(!divs.hasOwnProperty(Accountname)){
         console.log(Accountname)
-        divs[Accountname] = accountinfo
+        console.log(accountinfo)
+
+        console.log(global.salt)
+        console.log(MP)
+        deckey = Crypto.Create_key(MP,global.salt)
+        console.log(deckey)
+        console.log(accountinfo)
+        accinfo = Crypto.decrypt(deckey['Master_key'],accountinfo)
+        console.log(accinfo)
+        x = JSON.parse(accinfo)
+        divs[Accountname] = x
 
     
         parentnode.appendChild(newdivv)
@@ -276,3 +386,21 @@ function deletechild(div_to_delete){
 
 
 }
+
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+  .then(function() {
+    // Existing and future Auth states are now persisted in the current
+    // session only. Closing the window would clear any existing state even
+    // if a user forgets to sign out.
+    // ...
+    // New sign-in will be persisted with session persistence.
+    console.log('we out piece')
+    return firebase.auth().signInWithEmailAndPassword(email, password);
+  })
+  .catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log(errorCode)
+    console.log(errorMessage)
+  });

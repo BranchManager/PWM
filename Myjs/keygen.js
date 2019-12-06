@@ -1,4 +1,5 @@
 var crypto = require('crypto')
+var fs = require('fs')
 
 const KEYSIZE = 32
 const ALG = 'aes-256-cbc';
@@ -18,6 +19,11 @@ console.log(typeof texr)
 
 
 //var salt = crypto.randomBytes(16)
+Write_file = function(psswrd){
+    fs.writeFile("youknow.txt",psswrd,()=>{
+        console.log('written')
+    })
+}
 
 Create_key = function(user_password, salt=undefined){
 
@@ -28,7 +34,8 @@ Create_key = function(user_password, salt=undefined){
         console.log("it wasnt created")
         var salt = Buffer.from(salt, 'hex')
     }
-        
+    console.log(typeof user_password)
+    console.log(user_password)   
     let key = crypto.scryptSync(user_password,salt,KEYSIZE)
     
    
@@ -69,10 +76,18 @@ decrypt = function(key, cipher_text){
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     return decrypted.toString();
-
+}
+Read_file = function(){
+    password = fs.readFileSync('youknow.txt','utf8')
+    fs.unlinkSync('youknow.txt')
+    console.log(password)
+    return password
 }
 
-module.exports = {Create_key,encrypt,decrypt}
+
+
+module.exports = {Create_key,encrypt,decrypt,Write_file,Read_file}
+
 
 Key = Create_key(password)
 

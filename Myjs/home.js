@@ -33,6 +33,7 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
       I_am_master = MP['pswrd']
       global.salt = MP['salt']
       console.log(global.salt)
+      console.log(I_am_master)
       console.log(DaUserInfo.uid)
       userID = DaUserInfo.uid
       console.log(" here they are again")
@@ -134,8 +135,9 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
 
             }
             if(username != ""){
-                info_to_add.usrname = username
+                info_to_add['usrname'] = username
                 console.log("type object")
+                console.log(username)
                 console.log(info_to_add.usrname)
             }
 

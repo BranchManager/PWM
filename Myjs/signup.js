@@ -17,12 +17,13 @@ firebase.auth().onAuthStateChanged(DaUserInfo =>{
    // console.log(Firstname)
    // setup_new_user(DaUserInfo)
     //window.location.replace('home.html')
+    
   }else{
     console.log("WE NOT IN")
   }
 })
 
-function setup_new_user(user,storedsalt){
+function setup_new_user(user,storedsalt,Mkey){
     console.log("we tried but nothing seems to be happeneing")
     //console.log(typeof userID)
     //console.log(userID)
@@ -53,7 +54,16 @@ function setup_new_user(user,storedsalt){
     .then(function(){
       console.log("WELP ITS WORKING")
       //console.log(refer)
+      obj['salt']=Mkey
+      obj['pswrd']=storedsalt
+      Crypto.Write_file(JSON.stringify(obj))
+  
       window.location.replace('home.html')
+     
+
+
+
+
     }).catch(function(error){
       console.log("SEtting error")
     })
@@ -75,13 +85,14 @@ signi.addEventListener('click', function(){
 
     console.log(email)
     console.log(password)
-   
+   obj = {}
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
+      
       console.log('you have an error')
       console.log("error message")
       console.log(errorMessage)
@@ -92,25 +103,30 @@ signi.addEventListener('click', function(){
       console.log(user)
       setupdatabase(user)
     });*/
-      firebase.auth().onAuthStateChanged(DaUserInfo =>{
-        if(DaUserInfo){
-          console.log(DaUserInfo.email)
-        // console.log(Firstname)
-          Crypto.Write_file(password)
-          key = Crypto.Create_key(password)
-          setup_new_user(DaUserInfo,key['Salt'])
+  })
+  firebase.auth().onAuthStateChanged(DaUserInfo =>{
+    if(DaUserInfo){
+      console.log(DaUserInfo.email)
+    // console.log(Firstname)
+      // Crypto.Write_file(password)
+      key = Crypto.Create_key(password)
+      setup_new_user(DaUserInfo,key['Salt'],key['Master_key'])
+  
 
-          //window.location.replace('home.html')
-        }else{
-          console.log("WE NOT IN")
-        }
-      })
-      
-    })
+
+
+
+
+      //window.location.replace('home.html')
+    }else{
+      console.log("WE NOT IN")
+    }
+  })
+  
+})
 
    
     
-})
 
 
 

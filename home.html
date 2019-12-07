@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.css">
+    <link rel="stylesheet" type="text/css" href="noahstyle.css">
+    <link rel="stylesheet" type="text/css" href="noahstyle.css">
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+    
+    <script>if (window.module) module = window.module;</script>
+  </head>
+  <style>
+  #side-menu{
+    height: 100vh;
+    ping-top:2.0em; 
+  }
+
+  .position_it{
+    position:fixed !important;
+    float: right;
+    bottom: 45px !important;
+    right: 50px ! important;
+    /*padding-right: 100 !important;
+    padding-left: 100 !important;*/
+  
+  }
+
+  .position_it2{
+    position: relative;
+    float: right;
+    right: 5px;
+  }
+  .position_it3{
+    position: relative;
+    float: right;
+    bottom: 36px;
+    right: 5px;
+  }
+
+  </style>
+
+  <body style="background: #1b1c1d;">
+    <!--ui left demo vertical inverted sidebar labeled icon menu fixed-->
+    <div class="ui vertical menu left fixed ">
+      <div class="item">
+        <div class="header">Secure</div>
+        <div class="menu">
+          <a class="item active">Passwords</a>
+          <a class="item">Personal Info</a>
+          <a class="item">New Password</a>
+        </div>
+      </div>
+      <div class="item">
+        <div class="header">Other</div>
+        <div class="menu">
+          <a class="item">Password generator</a>
+          <a class="item">Share</a>
+          <a class="item">PHP</a>
+        </div>
+      </div>
+      <div class="item">
+        <div class="header">Account</div>
+        <div class="menu">
+          <a id="signoutID" class="item" role="button">sign-out</a>
+          <a class="item" href="signupjacob.html">Dedicated</a>
+        </div>
+      </div>
+      <div class="item">
+        <div class="header">Support</div>
+        <div class="menu">
+          <a class="item">E-mail Support</a>
+          <a class="item">FAQs</a>
+        </div>
+        <button onclick="deletechildme()">delete</button>
+      </div>
+      
+      
+    </div>
+    <div class="leftify">
+      <div class="ui inverted segment">
+        <div id="parent_list" class="ui inverted relaxed divided list">
+          
+          
+
+
+          
+        </div>
+        
+      </div>
+      <div class="position_it ">
+        <div id="add_psswrd" class=" ui icon button fixed" data-tooltip="Add Account">
+          <i class="add icon"></i>
+        </div>
+      </div>
+      
+    </div>
+    
+    
+
+
+
+
+
+
+
+
+
+
+  <div class="ui modal ">
+    <div class="ui form centerfy">
+      <div class="field">
+        <label>Account</label>
+        <input id="typ" type="text" name="first-name" value="" placeholder="Netflix, Amazon, Facebook...">
+      </div>
+      <div class="field">
+        <label>Username</label>
+        <input id="usr"type="text" name="first-name" placeholder="Username (optional)">
+      </div>
+      <div class="field">
+        <label>Email </label>
+        <input id="Email" type="text" name="last-name" placeholder="Email used on Account">
+      </div>
+      <div class="field">
+        <label>Password used on account </label>
+        <input id="pwd" type="password" name="last-name" placeholder="Password used on Account">
+      </div>
+      <div class="field">
+        <div class="ui checkbox">
+          <input type="checkbox" tabindex="0" onclick="show_pssrd()" >
+          <label>show Password</label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="header">
+          <!--consider hiding this in the add button-->
+          <button id="add_account" class="ui button" type="button" >Add</button>
+        
+          <div id="hideme">
+            <div class="position_it3 ui buttons">
+              <button id="delete"class="ui button" type="button">Delete</button>
+              <div class="or"></div>
+              <button id="save" class="ui positive button" >Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  </body>
+
+  
+  <script src="Myjs/signout.js"></script>
+  <script src="Myjs/home.js">showit()</script>
+  <script src="Myjs/homebuttonfunc.js"></script>
+  
+</html>

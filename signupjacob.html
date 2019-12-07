@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="noahstyle.css">
+    <link rel="stylesheet" href="betterstyles.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <form class="ui form">
+          <div class="field">
+            <label>Username</label>
+            <input type="text" name="first-name" placeholder="Username">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="text" name="last-name" placeholder="Password">
+          </div>
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" tabindex="0" class="hidden">
+              <label>I agree to the Terms and Conditions</label>
+            </div>
+          </div>
+      </form>
+      <div class="button-panel">
+        <a class='btn' type="button" onclick="myFunction()">here</a>
+        <a class='btn' href="home.html">sign-up</a>
+      </div>
+    </div>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
+    <script>
+      function myFunction(){ 
+        console.log("hello4");
+        console.log(window.location.href = 'http://www.google.com');
+        
+        return false;
+      
+      }  
+    </script>
+  </body>
+</html>
